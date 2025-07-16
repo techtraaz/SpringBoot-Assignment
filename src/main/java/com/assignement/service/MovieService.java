@@ -25,10 +25,10 @@ public class MovieService {
         List<Movie> movie = movierepo.findAll();
 
         if(movie.isEmpty()){
-            Response<List<Movie>> response = new Response<>("11","success",null);
+            Response<List<Movie>> response = new Response<>("02","No Movies Found",null);
         }
 
-        Response<List<Movie>> movies = new Response<>("00","movies",movie);
+        Response<List<Movie>> movies = new Response<>("00","Success",movie);
 
         return ResponseEntity.status(HttpStatus.OK).body(movies);
 
@@ -37,19 +37,28 @@ public class MovieService {
     public ResponseEntity<Response<Movie>> findByImdb(String imdb){
         Movie movies = movierepo.findByImdb(imdb);
         if(movies == null){
-            Response<Movie> response = new Response<>("00","no movies",null);
+            Response<Movie> response = new Response<>("02","No Such Movie Found",null);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
-        Response<Movie> response = new Response<>("00","movie by imdb",movies);
+        Response<Movie> response = new Response<>("00","Success",movies);
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
 
     }
 
     public ResponseEntity<Response<String>> addMovie(Movie movie){
+
+        String imdb = movie.getImdb();
+
+        Movie ifmovie = movierepo.findByImdb(imdb);
+        if(ifmovie != null){
+            Response<String> response = new Response<>("04", "Movie already exists", null);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+        }
+
         movierepo.save(movie);
-        Response<String> response = new Response<>("00","movie add",null);
+        Response<String> response = new Response<>("00","Success",null);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -57,7 +66,7 @@ public class MovieService {
     public ResponseEntity<Response<String>> updateMovie(Movie movie){
         Movie movietoupdate = movierepo.findByImdb(movie.getImdb());
         if(movietoupdate == null){
-            Response<String> response = new Response<>("00","movie not found",null);
+            Response<String> response = new Response<>("02","No Such Movie Exists",null);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
@@ -68,7 +77,7 @@ public class MovieService {
         movietoupdate.setImageUrl(movie.getImageUrl());
 
         movierepo.save(movie);
-        Response<String> response = new Response<>("00","movie updated",null);
+        Response<String> response = new Response<>("00","Success",null);
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
@@ -76,12 +85,12 @@ public class MovieService {
     public ResponseEntity<Response<String>> deleteMovie(String imdb){
         Movie movietodelete = movierepo.findByImdb(imdb);
         if(movietodelete == null){
-            Response<String> response = new Response<>("00","movie not found",null);
+            Response<String> response = new Response<>("00","No Such Movie Exists",null);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
         movierepo.delete(movietodelete);
-        Response<String> response = new Response<>("00","movie deleted",null);
+        Response<String> response = new Response<>("00","Success",null);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

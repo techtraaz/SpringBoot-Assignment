@@ -21,7 +21,7 @@ public class MovieController {
     public MovieController(MovieService ms) {
         this.ms = ms;
     }
-    
+
 
     @GetMapping("")
     public ResponseEntity<Response<List<Movie>>> getAllMovies(){
