@@ -1,16 +1,17 @@
 package com.assignement.controller;
 
 import com.assignement.dto.MovieTest;
+import com.assignement.dto.Response;
 import com.assignement.entity.Movie;
 import com.assignement.service.MovieService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
 @RestController
+@RequestMapping("/movie")
 
 
 public class MovieController {
@@ -28,7 +29,7 @@ public class MovieController {
     }
 
     @GetMapping("/movie")
-    public List<Movie> getAllMovies(){
+    public ResponseEntity<Response<List<Movie>>> getAllMovies(){
       return  ms.getAllMovies();
 
     }
@@ -43,9 +44,21 @@ public class MovieController {
 
 
 
+    @GetMapping("/imdb/{imdb}")
+    public ResponseEntity<Response<Movie>> getAllMoviesByImdb(@PathVariable String imdb){
+        return ms.findByImdb(imdb);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Response<String>> addMovie(@RequestBody Movie movie){
+        return ms.addMovie(movie);
+    }
 
 
-
+    @PostMapping("/delete/{imdb}")
+    public ResponseEntity<Response<String>> deleteMovie(@PathVariable String imdb){
+        return ms.deleteMovie(imdb);
+    }
 
 
 }
