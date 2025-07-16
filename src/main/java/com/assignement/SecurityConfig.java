@@ -22,6 +22,9 @@ public class SecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
 
+    @Autowired
+    private CustomAuthEntryPoint entrypoint;
+
     @Bean
     public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception {
         http
@@ -32,6 +35,7 @@ public class SecurityConfig {
                         .requestMatchers("/movie/**").authenticated()
                         .anyRequest().authenticated()
                 )
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(entrypoint))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
