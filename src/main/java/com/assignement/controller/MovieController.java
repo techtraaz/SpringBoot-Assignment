@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/movie")
+@RequestMapping("/movies")
 
 
 public class MovieController {
@@ -21,43 +21,35 @@ public class MovieController {
     public MovieController(MovieService ms) {
         this.ms = ms;
     }
+    
 
-
-    @GetMapping("/test")
-    public String tetst(){
-        return "server running";
-    }
-
-    @GetMapping("/movie")
+    @GetMapping("")
     public ResponseEntity<Response<List<Movie>>> getAllMovies(){
       return  ms.getAllMovies();
 
     }
 
-    @GetMapping("/movie1")
-    public ResponseEntity<MovieTest> getAllMovies1(){
-        MovieTest movieTest = new MovieTest();
-        movieTest.setName("ABC");
-        movieTest.setQty(5);
-        return ResponseEntity.ok().body(movieTest);
-    }
 
-
-
-    @GetMapping("/imdb/{imdb}")
+    @GetMapping("/{imdb}")
     public ResponseEntity<Response<Movie>> getAllMoviesByImdb(@PathVariable String imdb){
         return ms.findByImdb(imdb);
     }
 
-    @PostMapping("/add")
+    @PostMapping("")
     public ResponseEntity<Response<String>> addMovie(@RequestBody Movie movie){
         return ms.addMovie(movie);
     }
 
 
-    @PostMapping("/delete/{imdb}")
+    @DeleteMapping("/{imdb}")
     public ResponseEntity<Response<String>> deleteMovie(@PathVariable String imdb){
         return ms.deleteMovie(imdb);
+    }
+
+
+    @PutMapping("")
+    public ResponseEntity<Response<String>> updateMovie(@RequestBody Movie movie){
+        return ms.updateMovie(movie);
     }
 
 

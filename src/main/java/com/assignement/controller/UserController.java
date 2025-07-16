@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService us;
@@ -28,15 +28,6 @@ public class UserController {
         return us.Login(logindto);
     }
 
-    @GetMapping("/testget")
-    public String TestGet(){
-        return "test";
-    }
 
-    @PostMapping("/testpost")
-    public String TestPost()
-    {
-        return "testpost";
-    }
 
 }
