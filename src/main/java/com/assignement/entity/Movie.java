@@ -21,15 +21,19 @@ public class Movie {
     @Id
     private String imdb;
 
-    @NotBlank(message = "title cannot be blank")
+    @NotBlank(message = "title cannot be null")
     private String title;
 
-    
+    @NotBlank(message = "description cannot be null")
     private String description;
+
+    @NotBlank(message = "rating cannot be null")
     private double rating;
+
+    @NotBlank(message = "year cannot be null")
     private String year;
 
-
+    @NotBlank(message = "imageUrl cannot be null")
     private String imageUrl;
 
 

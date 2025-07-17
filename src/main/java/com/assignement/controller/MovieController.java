@@ -4,13 +4,14 @@ package com.assignement.controller;
 import com.assignement.dto.Response;
 import com.assignement.entity.Movie;
 import com.assignement.service.MovieService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/movies")
 
