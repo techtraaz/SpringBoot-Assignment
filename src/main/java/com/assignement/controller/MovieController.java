@@ -1,9 +1,10 @@
 package com.assignement.controller;
 
-import com.assignement.dto.MovieTest;
+
 import com.assignement.dto.Response;
 import com.assignement.entity.Movie;
 import com.assignement.service.MovieService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,7 @@ public class MovieController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Response<String>> addMovie(@RequestBody Movie movie){
+    public ResponseEntity<Response<String>> addMovie(@Valid @RequestBody Movie movie){
         return ms.addMovie(movie);
     }
 

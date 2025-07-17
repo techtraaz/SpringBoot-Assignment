@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MovieService {
@@ -18,6 +17,7 @@ public class MovieService {
 
     public MovieService(MovieRepo movierepo){
         this.movierepo = movierepo;
+
     }
 
     public ResponseEntity<Response<List<Movie>>> getAllMovies(){
@@ -56,6 +56,7 @@ public class MovieService {
             Response<String> response = new Response<>("04", "Movie already exists", null);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
+
 
         movierepo.save(movie);
         Response<String> response = new Response<>("00","Success",null);
